@@ -88,9 +88,4 @@ test._arraySort([5,2,3]);
 test._arrayDinstinct([2,3,1]);
 test._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}]);
 
-/*目前只支持单一元素去重，复杂情况正在研究
-①指定key去重:test._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}],"time");
-②复杂情况对象去重：test._arrayDinstinct([{name:"A",time:1},{name:"B",time:2},{name:"C",time:1},{name:"C",time:1}],"time");
-*/
-
 /*当创建一个新的对象实例时，会影响上面方法的输出。例如:console.log(new UJS());*/
