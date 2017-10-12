@@ -95,6 +95,48 @@ UJS.prototype={
             copy[key] = original[key]
         })
         return copy
+    },
+    _resolveUrl:function(Url){
+        "use strict"
+        
+        //'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'→"a=1&b=2&c=&d=xxx&"
+        function getSearch(Url){
+            let indexReg=/\?/
+            let resultArr = indexReg.exec(Url)
+            let searchStr = Url.substr(resultArr['index']+1)
+            return searchStr
+        }
+        var mnwUrl = 'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'
+        var searchResult = getUrlParameter(mnwUrl)
+        
+        //"a=1&b=2&c=&d=xxx&"→["a=1","b=2","c=","d=xxx"]
+        function getPara(result){
+            if(result!==''){
+                let paraReg=/\&/g
+                let paraArr=[],
+                    para='';
+                let circle = ''
+                paraArr = paraReg.exec(result)
+                para = result.substring(0,paraArr.index)
+                arr.push(para)
+                circle = result.substr(paraArr['index']+1)
+                getPara(circle)
+            }else{
+                console.log("遍历结束")
+            }
+        }
+        var arr = []
+        getPara(searchResult)
+        
+        //["a=1","b=2","c=","d=xxx"]→{"a":"1","b":"2","c":"","d":"xxx"}
+        var obj = {}
+        for(let i =0 ;i<arr.length;i++){
+            let mid = arr[i]
+            let key = mid.substring(0,mid.indexOf("="))
+            let value = mid.substr(mid.indexOf("=")+1)
+            obj[key] = value
+        }
+        return JSON.stringify(obj)        
     }
 }
 
