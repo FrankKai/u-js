@@ -43,14 +43,23 @@ UJS.prototype={
         {
             console.log("对象类型");
         }
-        else if(c=="[object Null]")
+        else if(Object.prototype.toString.call(data)=="[object Null]")
         {
             console.log("null特殊类型");
         }
-        else
+        else if(Object.prototype.toString.call(data)=="[object Promise]")
         {
+            console.log("promise类型");
+        }
+        else{
             console.log("未知类型")
         }
+    },
+    isObject:function(obj){
+        return obj !== null && typeof obj === 'object'
+    },
+    isPromise(val){
+        return val && typeof val.then === 'function'
     },
     _arraySort:function(arr){
         arr.sort((x,y)=>(x>y));
@@ -79,6 +88,13 @@ UJS.prototype={
             }
         }
         //return [...new Set(arr)];
+    },
+    _deepCopyObj:function(original){
+        let copy = {}
+        Object.keys(original).forEach(key=>{
+            copy[key] = original[key]
+        })
+        return copy
     }
 }
 
