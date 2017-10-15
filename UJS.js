@@ -137,6 +137,20 @@ UJS.prototype={
             obj[key] = value
         }
         return JSON.stringify(obj)        
+    },
+    _cached:function(fn) {
+        var cache = Object.create(null);
+        return (function cachedFn (str) {
+          var hit = cache[str];
+          return hit || (cache[str] = fn(str))
+        })
+      },
+    _camlize:function(str){/*'hello-world-javascript' → 'helloWorldJavascript'*/ 
+        var camelizeRE = /-(\w)/g
+        str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
+            return w?-w.toUpperCase():'';
+            // return w?"-"+w.toUpperCase():'';
+        })
     }
 }
 
