@@ -145,7 +145,9 @@ UJS.prototype={
           return hit || (cache[str] = fn(str))
         })
       },
-    _camlize:function(str){/*'hello-world-javascript' → 'helloWorldJavascript'*/ 
+    _camlize:function(str){
+        //return a new camlized string
+        /*'hello-world-javascript' → 'helloWorldJavascript'*/ 
         var camelizeRE = /-(\w)/g
         str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
             return w?-w.toUpperCase():'';
