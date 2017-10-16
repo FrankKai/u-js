@@ -55,17 +55,17 @@ UJS.prototype={
             console.log("未知类型")
         }
     },
-    isArray:function(arr){
+    _isArray:function(arr){
         var toString = Object.prototype.toString
         return toString.call(arr) === "[object Array]"
     },
-    isArrayHasElement:function(arr){
-        return UJS.prototype.isArray(arr) && arr.length>0
+    _isArrayHasElement:function(arr){
+        return UJS.prototype._isArray(arr) && arr.length>0
     },
-    isObject:function(obj){
+    _isObject:function(obj){
         return obj !== null && typeof obj === 'object'
     },
-    isPromise(val){
+    _isPromise(val){
         return val && typeof val.then === 'function'
     },
     _arraySort:function(arr){
@@ -172,8 +172,16 @@ UJS.prototype={
     },
     _hasOwn:function(obj,key){
         return Object.prototype.hasOwnProperty.call(obj,key)
-    }
-
+    },
+    _toArray: function(list, start) {
+        start = start || 0;
+        var i = list.length - start;
+        var ret = new Array(i);
+        while (i--) {
+          ret[i] = list[i + start];
+        }
+        return ret
+      }
 }
 
 var test=new UJS();
@@ -195,4 +203,13 @@ function hyphenate(str){
 hyphenate("regexpResult")
 
 /*Call own method test*/
-test.isArrayHasElement([1,2,3])
+test._isArrayHasElement([1,2,3])
+/*Array-like object to Array test*/
+function toArray(){
+    function sum(foo,bar){
+        return arguments
+    }
+    // return sum(1,2)
+    return UJS.prototype._toArray(sum(1,2))
+}
+toArray()
