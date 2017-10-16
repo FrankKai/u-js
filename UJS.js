@@ -149,12 +149,31 @@ UJS.prototype={
         //return a new camlized string
         /*'hello-world-javascript' → 'helloWorldJavascript'*/ 
         var camelizeRE = /-(\w)/g
-        str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
-            return w?-w.toUpperCase():'';
+        var result = str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
+            return w?w.toUpperCase():'';
             // return w?"-"+w.toUpperCase():'';
         })
-    }
+        return result
+    },
+    _hyphenate:function(str){
+        var hyphenateRE = /\B([A-Z])/g;
+        return str.replace(hyphenateRE, function(_,c){
+            return c?"-"+c.toLowerCase():''
+        })
+        //str.replace(hyphenateRE,"-$1").toLowerCase()
+    },
+
 }
+//绑定库中的方法到当前window,实现继承
+function camlize(str){
+    return UJS.prototype._camlize.call(this,str)
+}
+camlize("a-b-c-d-e-f-g-hijklmn")
+
+function hyphenate(str){
+    return UJS.prototype._hyphenate.apply(this,arguments)
+}
+hyphenate("regexpResult")
 
 var test=new UJS();
 test._checkType("a");
