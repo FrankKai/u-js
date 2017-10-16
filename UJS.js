@@ -55,6 +55,13 @@ UJS.prototype={
             console.log("未知类型")
         }
     },
+    isArray:function(arr){
+        var toString = Object.prototype.toString
+        return toString.call(arr) === "[object Array]"
+    },
+    isArrayHasElement:function(arr){
+        return UJS.prototype.isArray(arr) && arr.length>0
+    },
     isObject:function(obj){
         return obj !== null && typeof obj === 'object'
     },
@@ -62,6 +69,7 @@ UJS.prototype={
         return val && typeof val.then === 'function'
     },
     _arraySort:function(arr){
+        arr = arr || 
         arr.sort((x,y)=>(x>y));
         return arr;
     },
@@ -162,8 +170,19 @@ UJS.prototype={
         })
         //str.replace(hyphenateRE,"-$1").toLowerCase()
     },
+    _hasOwn:function(obj,key){
+        return Object.prototype.hasOwnProperty.call(obj,key)
+    }
 
 }
+
+var test=new UJS();
+test._checkType("a");
+test._arraySort([5,2,3]);
+test._arrayDinstinct([2,3,1]);
+test._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}]);
+
+
 //绑定库中的方法到当前window,实现继承
 function camlize(str){
     return UJS.prototype._camlize.call(this,str)
@@ -175,10 +194,5 @@ function hyphenate(str){
 }
 hyphenate("regexpResult")
 
-var test=new UJS();
-test._checkType("a");
-test._arraySort([5,2,3]);
-test._arrayDinstinct([2,3,1]);
-test._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}]);
-
-/*当创建一个新的对象实例时，会影响上面方法的输出。例如:console.log(new UJS());*/
+/*Call own method test*/
+test.isArrayHasElement([1,2,3])
