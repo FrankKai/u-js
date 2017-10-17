@@ -181,7 +181,32 @@ UJS.prototype={
           ret[i] = list[i + start];
         }
         return ret
-      }
+    },
+    _getObjDetails:function(obj,getKey,getValue){
+        // if(getKey&&getValue){
+        //     return keysArr,valuesArr
+        // }else{
+        //     if(getKey&&!getValue){
+        //         return keysArr
+        //     }else if(!getKey&&getValue){
+        //         return valuesArr
+        //     }else{
+        //         return []
+        //     }
+        // }
+        var keysArr = [],valuesArr = [];
+        var fullArr=[];
+        for(var key in obj){
+            keysArr.push(key)
+            valuesArr.push(obj[key])
+        }
+        fullArr.push(keysArr)
+        fullArr.push(valuesArr)
+        return getKey&&getValue ? fullArr
+               :getKey?keysArr
+                :getValue?valuesArr
+                :[]
+    }
 }
 
 var test=new UJS();
@@ -213,3 +238,6 @@ function toArray(){
     return UJS.prototype._toArray(sum(1,2))
 }
 toArray()
+test._getObjDetails({foo:1,bar:2},true,true)
+test._getObjDetails({foo:1,bar:2},true,false)
+test._getObjDetails({foo:1,bar:2},false,true)
