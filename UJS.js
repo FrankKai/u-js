@@ -206,6 +206,45 @@ UJS.prototype={
                :getKey?keysArr
                 :getValue?valuesArr
                 :[]
+    },
+    _extendObj:function(extendedObj,sourceObj){
+        for(var key in sourceObj){
+            extendedObj[key] = sourceObj[key]
+        }
+        return extendedObj
+    },
+    _arrToObj:function(arr){
+        var obj = {}
+        for(var i = 0;i<arr.length;i++){
+            obj[i]=arr[i]
+        }
+        return obj
+    },
+    _no:function(a,b,c){
+        return false;
+    },
+    _identity:function(_){
+        return _;
+    },
+    _howToView:function(){
+        
+    },
+    _render:function(){
+
+    },
+    _getData:function(){
+
+    },
+    _setData:function(){
+
+    },
+    _arrMin:function(arr){
+        var min = Math.min.apply(null,arr)
+        var idx = arr.indexOf(min)
+        var obj ={}
+        obj.min = min
+        obj.idx = idx
+        return obj
     }
 }
 
@@ -232,7 +271,7 @@ test._isArrayHasElement([1,2,3])
 /*Array-like object to Array test*/
 function toArray(){
     function sum(foo,bar){
-        return arguments
+        return [1,2,3]
     }
     // return sum(1,2)
     return UJS.prototype._toArray(sum(1,2))
