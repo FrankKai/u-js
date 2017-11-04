@@ -1,0 +1,22 @@
+{
+  "name": "ujf",
+  "version": "1.0.0",
+  "description": "Fullname is Useful-Js-Functions，my own javascript function library.",
+  "main": "ujf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrankKai/UJF.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "FrankKai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrankKai/UJF/issues"
+  },
+  "homepage": "https://github.com/FrankKai/UJF#readme"
+}
