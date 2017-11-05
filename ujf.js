@@ -2,7 +2,7 @@ var UJF = function(){
     this.version="0.0.1";
 };
 UJF.prototype={
-    checkType:function(data){
+    checkType(data){
         if(typeof data=="string")
         {
             console.log("字符串字面量");
@@ -55,7 +55,7 @@ UJF.prototype={
             console.log("未知类型")
         }
     },
-    isArray:function(arr){
+    isArray(arr){
         var toString = Object.prototype.toString
         return toString.call(arr) === "[object Array]"
     },
@@ -69,12 +69,12 @@ UJF.prototype={
         return val && typeof val.then === 'function'
     },
     arraySort:function(arr){
-        arr = arr || 
+        arr = arr || []
         arr.sort((x,y)=>(x>y));
         return arr;
     },
     _arrayDinstinct:function(arr){
-
+        var _arrNew=[]
         for(var i=0;i<arr.length;i++){
             if(arr[i] instanceof Object && Object.prototype.toString.call(arr[i])!=="[object Null]"){
                 if(Object.prototype.toString.call(arr[i])=="[object Object]"){
@@ -91,7 +91,7 @@ UJF.prototype={
                     console.log(new Error("UJI暂不支持当前类型数组去重。"))
                 }
             }else{
-                return [...new Set(this._arraySort(arr))];
+                return [...new Set(this.arraySort(arr))];
             }
         }
         //return [...new Set(arr)];
@@ -247,36 +247,5 @@ UJF.prototype={
         return obj
     }
 }
-
-var test=new UJF();
-test.checkType("a");
-test.arraySort([5,2,3]);
-test.arrayDinstinct([2,3,1]);
-test.arrayDinstinct([{time:1},{time:2},{time:4},{time:1}]);
-
-
-//绑定库中的方法到当前window,实现继承
-function camlize(str){
-    return UJF.prototype._camlize.call(this,str)
-}
-camlize("a-b-c-d-e-f-g-hijklmn")
-
-function hyphenate(str){
-    return UJF.prototype.hyphenate.apply(this,arguments)
-}
-hyphenate("regexpResult")
-
-/*Call own method test*/
-test.isArrayHasElement([1,2,3])
-/*Array-like object to Array test*/
-function toArray(){
-    function sum(foo,bar){
-        return [1,2,3]
-    }
-    // return sum(1,2)
-    return UJF.prototype.toArray(sum(1,2))
-}
-toArray()
-test.getObjDetails({foo:1,bar:2},true,true)
-test.getObjDetails({foo:1,bar:2},true,false)
-test.getObjDetails({foo:1,bar:2},false,true)
+// export default UJF
+module.exports = UJF;
