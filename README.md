@@ -46,6 +46,8 @@ ujf.cached(fn)
 ujf.camlize(str)
 //返回连字符格式
 ujf.hyphenate(str)
+//小数精度丢失问题
+ujf.decimalTest(x,y,z)
 ```
 
 >目前只支持单一元素去重，复杂情况正在研究<br>

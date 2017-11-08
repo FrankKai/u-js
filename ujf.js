@@ -245,6 +245,21 @@ UJF.prototype={
         obj.min = min
         obj.idx = idx
         return obj
+    },
+    getDecimalLength:function (num){
+        var numStr = num + ''
+        var decimalLength = numStr.length-(numStr.indexOf('.')+1)
+        return decimalLength
+    },
+    parFixed:function (value ,precision){
+        return parseFloat((value).toFixed(precision))
+    },
+    /*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
+    decimalTest(x,y,z){
+        var L = UJF.prototype.getDecimalLength
+        var C = UJF.prototype.parFixed
+        var maxDecimal = Math.min.apply(null,[L(x+y),L(z)])
+        return C(x+y,maxDecimal) === C(z,maxDecimal)
     }
 }
 // export default UJF
