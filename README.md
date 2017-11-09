@@ -17,9 +17,7 @@ ujf.isArrayHasElement(arr)
 //数组排序
 ujf.arraySort([5,2,3]);
 //简单数组去重
-ujf._arrayDinstinct([1,2,3,1]);
-//复杂数组去重
-ujf._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}]);
+ujf.arrayDistinct([1,2,3,1]);
 //数组转对象
 ujf.arrToObj(arr)
 //数组最小值
@@ -49,9 +47,3 @@ ujf.hyphenate(str)
 //小数精度丢失问题
 ujf.decimalTest(x,y,z)
 ```
-
->目前只支持单一元素去重，复杂情况正在研究<br>
-①指定key去重:ujf._arrayDinstinct([{time:1},{time:2},{time:4},{time:1}],"time");<br>
-②复杂情况对象去重：ujf._arrayDinstinct([{name:"A",time:1},{name:"B",time:2},{name:"C",time:1},{name:"C",time:1}],"time");
-
-
