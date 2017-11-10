@@ -1,12 +1,13 @@
 {
   "name": "ujf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Fullname is Useful-Js-Functions，my own javascript function library.",
   "main": "ujf.js",
   "scripts": {
-    "main-compile": "babel ujf.js --presets babel-preset-env -o ujf.common.js",    
-    "test-compile": "babel test --presets babel-preset-env -d test-compile",
-    "src-compile": "babel src --presets babel-preset-env -d ./src-compile"
+    "main-compile": "babel ujf.js --presets env -o ujf.common.js",
+    "test-compile": "babel test --presets env -d test-compile",
+    "src-compile": "babel src --presets env -d ./src-compile",
+    "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
+    "babel-preset-airbnb": "^2.4.0",
     "babel-preset-env": "^1.6.1"
   }
 }
