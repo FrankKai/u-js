@@ -73,28 +73,9 @@ UJF.prototype={
         arr.sort((x,y)=>(x>y));
         return arr;
     },
-    _arrayDinstinct:function(arr){
-        var _arrNew=[]
-        for(var i=0;i<arr.length;i++){
-            if(arr[i] instanceof Object && Object.prototype.toString.call(arr[i])!=="[object Null]"){
-                if(Object.prototype.toString.call(arr[i])=="[object Object]"){
-                    arr.sort((x,y)=>(x.time>y.time));
-                    arr.reduce(function(accumulator, currentValue, currentIndex, array){  
-                        if(accumulator.time === currentValue.time){
-                            array[currentIndex-1]=null;
-                        }
-                        //console.log(accumulator);
-                        return currentValue;
-                    });
-                    return _arrNew = arr.filter((subarr)=>{return subarr!=null})
-                }else{
-                    console.log(new Error("UJI暂不支持当前类型数组去重。"))
-                }
-            }else{
-                return [...new Set(this.arraySort(arr))];
-            }
-        }
-        //return [...new Set(arr)];
+    arrayDistinct:function(arr){
+        return [...new Set(arr)];
+        //return Array.from(new Set(arr));
     },
     deepCopyObj:function(original){
         let copy = {}
@@ -105,7 +86,6 @@ UJF.prototype={
     },
     resolveUrl:function(Url){
         "use strict"
-        
         //'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'→"a=1&b=2&c=&d=xxx&"
         function getSearch(Url){
             let indexReg=/\?/
@@ -134,8 +114,6 @@ UJF.prototype={
         }
         var arr = []
         getPara(searchResult)
-        
-        //["a=1","b=2","c=","d=xxx"]→{"a":"1","b":"2","c":"","d":"xxx"}
         var obj = {}
         for(let i =0 ;i<arr.length;i++){
             let mid = arr[i]
@@ -153,12 +131,9 @@ UJF.prototype={
         })
       },
     camlize:function(str){
-        //return a new camlized string
-        /*'hello-world-javascript' → 'helloWorldJavascript'*/ 
         var camelizeRE = /-(\w)/g
         var result = str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
             return w?w.toUpperCase():'';
-            // return w?"-"+w.toUpperCase():'';
         })
         return result
     },
@@ -167,7 +142,6 @@ UJF.prototype={
         return str.replace(hyphenateRE, function(_,c){
             return c?"-"+c.toLowerCase():''
         })
-        //str.replace(hyphenateRE,"-$1").toLowerCase()
     },
     hasOwn:function(obj,key){
         return Object.prototype.hasOwnProperty.call(obj,key)
@@ -182,17 +156,6 @@ UJF.prototype={
         return ret
     },
     getObjDetails:function(obj,getKey,getValue){
-        // if(getKey&&getValue){
-        //     return keysArr,valuesArr
-        // }else{
-        //     if(getKey&&!getValue){
-        //         return keysArr
-        //     }else if(!getKey&&getValue){
-        //         return valuesArr
-        //     }else{
-        //         return []
-        //     }
-        // }
         var keysArr = [],valuesArr = [];
         var fullArr=[];
         for(var key in obj){
@@ -225,18 +188,6 @@ UJF.prototype={
     identity:function(_){
         return _;
     },
-    howToView:function(){
-        
-    },
-    render:function(){
-
-    },
-    getData:function(){
-
-    },
-    setData:function(){
-
-    },
     arrMin:function(arr){
         console.log(this)
         var min = Math.min.apply(null,arr)
@@ -262,5 +213,4 @@ UJF.prototype={
         return C(x+y,maxDecimal) === C(z,maxDecimal)
     }
 }
-// export default UJF
 module.exports = UJF;

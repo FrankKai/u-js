@@ -53,37 +53,15 @@ UJF.prototype = {
     },
 
     arraySort: function arraySort(arr) {
-        arr = arr || arr.sort(function (x, y) {
+        arr = arr || [];
+        arr.sort(function (x, y) {
             return x > y;
         });
         return arr;
     },
-    _arrayDinstinct: function _arrayDinstinct(arr) {
-        var _arrNew = [];
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] instanceof Object && Object.prototype.toString.call(arr[i]) !== "[object Null]") {
-                if (Object.prototype.toString.call(arr[i]) == "[object Object]") {
-                    arr.sort(function (x, y) {
-                        return x.time > y.time;
-                    });
-                    arr.reduce(function (accumulator, currentValue, currentIndex, array) {
-                        if (accumulator.time === currentValue.time) {
-                            array[currentIndex - 1] = null;
-                        }
-                        //console.log(accumulator);
-                        return currentValue;
-                    });
-                    return _arrNew = arr.filter(function (subarr) {
-                        return subarr != null;
-                    });
-                } else {
-                    console.log(new Error("UJI暂不支持当前类型数组去重。"));
-                }
-            } else {
-                return [].concat(_toConsumableArray(new Set(this.arraySort(arr))));
-            }
-        }
-        //return [...new Set(arr)];
+    arrayDistinct: function arrayDistinct(arr) {
+        return [].concat(_toConsumableArray(new Set(arr)));
+        //return Array.from(new Set(arr));
     },
     deepCopyObj: function deepCopyObj(original) {
         var copy = {};
@@ -94,7 +72,6 @@ UJF.prototype = {
     },
     resolveUrl: function resolveUrl(Url) {
         "use strict";
-
         //'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'→"a=1&b=2&c=&d=xxx&"
 
         function getSearch(Url) {
@@ -124,8 +101,6 @@ UJF.prototype = {
         }
         var arr = [];
         getPara(searchResult);
-
-        //["a=1","b=2","c=","d=xxx"]→{"a":"1","b":"2","c":"","d":"xxx"}
         var obj = {};
         for (var i = 0; i < arr.length; i++) {
             var mid = arr[i];
@@ -143,13 +118,10 @@ UJF.prototype = {
         };
     },
     camlize: function camlize(str) {
-        //return a new camlized string
-        /*'hello-world-javascript' → 'helloWorldJavascript'*/
         var camelizeRE = /-(\w)/g;
         var result = str.replace(camelizeRE, function (_, w, offset, str) {
             /*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
             return w ? w.toUpperCase() : '';
-            // return w?"-"+w.toUpperCase():'';
         });
         return result;
     },
@@ -158,7 +130,6 @@ UJF.prototype = {
         return str.replace(hyphenateRE, function (_, c) {
             return c ? "-" + c.toLowerCase() : '';
         });
-        //str.replace(hyphenateRE,"-$1").toLowerCase()
     },
     hasOwn: function hasOwn(obj, key) {
         return Object.prototype.hasOwnProperty.call(obj, key);
@@ -173,17 +144,6 @@ UJF.prototype = {
         return ret;
     },
     getObjDetails: function getObjDetails(obj, getKey, getValue) {
-        // if(getKey&&getValue){
-        //     return keysArr,valuesArr
-        // }else{
-        //     if(getKey&&!getValue){
-        //         return keysArr
-        //     }else if(!getKey&&getValue){
-        //         return valuesArr
-        //     }else{
-        //         return []
-        //     }
-        // }
         var keysArr = [],
             valuesArr = [];
         var fullArr = [];
@@ -214,10 +174,6 @@ UJF.prototype = {
     identity: function identity(_) {
         return _;
     },
-    howToView: function howToView() {},
-    render: function render() {},
-    getData: function getData() {},
-    setData: function setData() {},
     arrMin: function arrMin(arr) {
         console.log(this);
         var min = Math.min.apply(null, arr);
@@ -226,6 +182,21 @@ UJF.prototype = {
         obj.min = min;
         obj.idx = idx;
         return obj;
+    },
+    getDecimalLength: function getDecimalLength(num) {
+        var numStr = num + '';
+        var decimalLength = numStr.length - (numStr.indexOf('.') + 1);
+        return decimalLength;
+    },
+    parFixed: function parFixed(value, precision) {
+        return parseFloat(value.toFixed(precision));
+    },
+    /*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
+    decimalTest: function decimalTest(x, y, z) {
+        var L = UJF.prototype.getDecimalLength;
+        var C = UJF.prototype.parFixed;
+        var maxDecimal = Math.min.apply(null, [L(x + y), L(z)]);
+        return C(x + y, maxDecimal) === C(z, maxDecimal);
     }
-    // export default UJF
-};module.exports = UJF;
+};
+module.exports = UJF;
