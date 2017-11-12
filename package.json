@@ -6,7 +6,9 @@
   "scripts": {
     "main-compile": "babel ujf.js --presets babel-preset-env -o ujf.common.js",    
     "test-compile": "babel test --presets babel-preset-env -d test-compile",
-    "src-compile": "babel src --presets babel-preset-env -d ./src-compile"
+    "src-compile": "babel src --presets babel-preset-env -d ./src-compile",
+    "add": "git add .",
+    "push": "git push -u origin master"
   },
   "repository": {
     "type": "git",
