@@ -1,15 +1,8 @@
-const arr = [[0,1],[2,3],[4,5]]
-
-const objectInArray = [
-    {
-        id: 1,
-    },
-    {
-        id: 2
+const arr =[1, 2, 3].map((x) => {
+    const y = x + 1;
+    if(y==2){
+        return x * y;
     }
-];
-
-const numberInArray = [
-    1,
-    2
-]
+    return x
+  });
+console.log(arr)

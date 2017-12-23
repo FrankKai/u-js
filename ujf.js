@@ -1,7 +1,16 @@
+/**
+ * desc: 常用函数库
+ * author : frank
+ */
 var UJF = function(){
     this.version="0.0.1";
 };
 UJF.prototype={
+    /**
+     * desc: 什么类型？
+     * @param {string||number||boolean||undefined||null||Array||Function||Date||RegExp||Error||Promise||Object} data
+     * log:  类型打印信息
+     */
     checkType(data){
         if(typeof data=="string")
         {
@@ -18,6 +27,10 @@ UJF.prototype={
         else if(typeof data=="undefined")
         {
             console.log("undefined特殊类型");
+        }
+        else if(Object.prototype.toString.call(data)=="[object Null]")
+        {
+            console.log("null特殊类型");
         }
         else if(data instanceof Array)
         {
@@ -39,51 +52,104 @@ UJF.prototype={
         {
             console.log("错误对象子类型");
         }
-        else if(Object.prototype.toString.call(data)=="[object Object]")
-        {
-            console.log("对象类型");
-        }
-        else if(Object.prototype.toString.call(data)=="[object Null]")
-        {
-            console.log("null特殊类型");
-        }
         else if(Object.prototype.toString.call(data)=="[object Promise]")
         {
             console.log("promise类型");
+        }
+        else if(Object.prototype.toString.call(data)=="[object Object]")
+        {
+            console.log("对象类型");
         }
         else{
             console.log("未知类型")
         }
     },
+    /**
+     * desc: 是数组吗？
+     * @param {Array} arr 
+     * return {Boolean}
+     */
     isArray(arr){
         var toString = Object.prototype.toString
         return toString.call(arr) === "[object Array]"
     },
+    /**
+     * desc: 数组中有元素吗？
+     * @param {Array} arr
+     * return {Boolean}
+     */
     isArrayHasElement:function(arr){
         return UJF.prototype.isArray(arr) && arr.length>0
     },
+    /**
+     * desc: 是对象吗？
+     * @param {Object} obj
+     * return {Boolean}
+     */
     isObject:function(obj){
         return obj !== null && typeof obj === 'object'
     },
+    /**
+     * desc: 是Promise对象吗？
+     * @param {Promise} val
+     * return {Boolean} 
+     */
     isPromise(val){
         return val && typeof val.then === 'function'
     },
-    arraySort:function(arr){
-        arr = arr || []
-        arr.sort((x,y)=>(x>y));
-        return arr;
-    },
+    /**
+     * desc: 纯函数式排序,可选从大到小,从小到大
+     * @param {Array,string} arr
+     * return {Array} 
+     */
+    arraySort:function(arr,type){
+		var pureArr = arr.map((x)=>x) || [];
+		var localType = type || "";
+		var mapCallback = null;
+		switch (localType){
+			case "small-to-big":{
+				mapCallback = (x,y)=>(x>y);
+				break;
+			}
+			case "big-to-small":{
+				mapCallback = (x,y)=>(x<y);
+				break;
+			}
+			default:
+				mapCallback = (x,y)=>(x>y);
+				break;
+		}
+        pureArr.sort(mapCallback);
+        return pureArr;
+	},
+	/**
+	 * desc: 纯函数式去重数组
+	 * @param {Array} arr
+	 * return {Array}
+	 */
     arrayDistinct:function(arr){
-        return [...new Set(arr)];
-        //return Array.from(new Set(arr));
-    },
+		var pureArr = [...new Set(arr)];
+        return pureArr;
+        //return Array.from(pureArr);
+	},
+	/**
+	 * desc: 深拷贝对象
+	 * @param {Object} obj
+	 * return {Object}
+	 */
     deepCopyObj:function(original){
         let copy = {}
         Object.keys(original).forEach(key=>{
             copy[key] = original[key]
         })
         return copy
-    },
+	},
+	/**
+	 * desc: 解析Url查询参数为JSON
+	 * @param {string} Url
+	 * return {string}
+	 * eg:"http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&"→"{"a":"1","b":"2","c":"","d":"xxx"}"
+	 */
     resolveUrl:function(Url){
         "use strict"
         //'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'→"a=1&b=2&c=&d=xxx&"
@@ -93,8 +159,8 @@ UJF.prototype={
             let searchStr = Url.substr(resultArr['index']+1)
             return searchStr
         }
-        var mnwUrl = 'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'
-        var searchResult = getUrlParameter(mnwUrl)
+        var mnwUrl = Url;
+        var searchResult = getSearch(mnwUrl);
         
         //"a=1&b=2&c=&d=xxx&"→["a=1","b=2","c=","d=xxx"]
         function getPara(result){
@@ -113,7 +179,9 @@ UJF.prototype={
             }
         }
         var arr = []
-        getPara(searchResult)
+		getPara(searchResult)
+
+		//["a=1","b=2","c=","d=xxx"]→"{"a":"1","b":"2","c":"","d":"xxx"}"
         var obj = {}
         for(let i =0 ;i<arr.length;i++){
             let mid = arr[i]
@@ -121,31 +189,54 @@ UJF.prototype={
             let value = mid.substr(mid.indexOf("=")+1)
             obj[key] = value
         }
-        return JSON.stringify(obj)        
-    },
+        return JSON.stringify(obj)
+	},
+	/**
+	 * desc: 缓存函数
+	 */
     cached:function(fn) {
         var cache = Object.create(null);
         return (function cachedFn (str) {
           var hit = cache[str];
           return hit || (cache[str] = fn(str))
         })
-      },
+	  },
+	/**
+	 * desc: 驼峰化
+	 * @param {string} str
+	 * return {string}
+	 */
     camlize:function(str){
         var camelizeRE = /-(\w)/g
         var result = str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
             return w?w.toUpperCase():'';
         })
         return result
-    },
+	},
+	/**
+	 * desc: 连字符化
+	 * @param {string} str
+	 * return {string}
+	 */
     hyphenate:function(str){
         var hyphenateRE = /\B([A-Z])/g;
         return str.replace(hyphenateRE, function(_,c){
             return c?"-"+c.toLowerCase():''
         })
-    },
+	},
+	/**
+	 * desc: 对象自检键存在性
+	 * @param {Object,string}
+	 * return {Boolean}
+	 */
     hasOwn:function(obj,key){
         return Object.prototype.hasOwnProperty.call(obj,key)
-    },
+	},
+	/**
+	 * desc: 截取数组
+	 * @param {Array,number}
+	 * return {Array}
+	 */
     toArray: function(list, start) {
         start = start || 0;
         var i = list.length - start;
@@ -154,7 +245,12 @@ UJF.prototype={
           ret[i] = list[i + start];
         }
         return ret
-    },
+	},
+	/**
+	 * desc: 获取对象键数组，值数组和键值数组
+	 * @param {Object,boolean,boolean}
+	 * return {Array}
+	 */
     getObjDetails:function(obj,getKey,getValue){
         var keysArr = [],valuesArr = [];
         var fullArr=[];
@@ -168,42 +264,69 @@ UJF.prototype={
                :getKey?keysArr
                 :getValue?valuesArr
                 :[]
-    },
+	},
+	/**
+	 * desc: 扩展对象
+	 * @param {Object,Object}
+	 * return {Object}
+	 */
     extendObj:function(extendedObj,sourceObj){
         for(var key in sourceObj){
             extendedObj[key] = sourceObj[key]
         }
         return extendedObj
-    },
+	},
+	/**
+	 * desc: 数组转对象
+	 * @param {Array}
+	 * return {Object}
+	 */
     arrToObj:function(arr){
         var obj = {}
         for(var i = 0;i<arr.length;i++){
             obj[i]=arr[i]
         }
         return obj
-    },
+	},
+	/**
+	 * desc: false get callback
+	 */
     no:function(a,b,c){
         return false;
-    },
+	},
+	/**
+	 * desc: underscore get callback
+	 */
     identity:function(_){
         return _;
-    },
+	},
+	/**
+	 * desc:获取数组最小值
+	 * @param {Array}
+	 * return {Object}
+	 */
     arrMin:function(arr){
-        console.log(this)
         var min = Math.min.apply(null,arr)
         var idx = arr.indexOf(min)
         var obj ={}
         obj.min = min
         obj.idx = idx
         return obj
-    },
+	},
+	/**
+	 * desc: 获取小数位数
+	 */
     getDecimalLength:function (num){
         var numStr = num + ''
         var decimalLength = numStr.length-(numStr.indexOf('.')+1)
         return decimalLength
-    },
+	},
+	/**
+	 * desc: 纯函数式四舍五入
+	 */
     parFixed:function (value ,precision){
-        return parseFloat((value).toFixed(precision))
+		var pureValue = value || 3.1415926;
+        return parseFloat((pureValue).toFixed(precision))
     },
     /*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
     decimalTest(x,y,z){
