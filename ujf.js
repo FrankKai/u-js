@@ -6,11 +6,11 @@ var UJF = function(){
     this.version="0.0.1";
 };
 UJF.prototype={
-    /**
-     * desc: 什么类型？
-     * @param {string||number||boolean||undefined||null||Array||Function||Date||RegExp||Error||Promise||Object} data
-     * log:  类型打印信息
-     */
+/**
+* desc: 什么类型？
+* @param {string||number||boolean||undefined||null||Array||Function||Date||RegExp||Error||Promise||Object} data
+* log:  类型打印信息
+*/
     checkType(data){
         if(typeof data=="string")
         {
@@ -64,44 +64,44 @@ UJF.prototype={
             console.log("未知类型")
         }
     },
-    /**
-     * desc: 是数组吗？
-     * @param {Array} arr 
-     * return {Boolean}
-     */
+/**
+* desc: 是数组吗？
+* @param {Array} arr 
+* return {Boolean}
+*/
     isArray(arr){
         var toString = Object.prototype.toString
         return toString.call(arr) === "[object Array]"
     },
-    /**
-     * desc: 数组中有元素吗？
-     * @param {Array} arr
-     * return {Boolean}
-     */
+/**
+* desc: 数组中有元素吗？
+* @param {Array} arr
+* return {Boolean}
+*/
     isArrayHasElement:function(arr){
         return UJF.prototype.isArray(arr) && arr.length>0
     },
-    /**
-     * desc: 是对象吗？
-     * @param {Object} obj
-     * return {Boolean}
-     */
+/**
+* desc: 是对象吗？
+* @param {Object} obj
+* return {Boolean}
+*/
     isObject:function(obj){
         return obj !== null && typeof obj === 'object'
     },
-    /**
-     * desc: 是Promise对象吗？
-     * @param {Promise} val
-     * return {Boolean} 
-     */
+/**
+* desc: 是Promise对象吗？
+* @param {Promise} val
+* return {Boolean} 
+*/
     isPromise(val){
         return val && typeof val.then === 'function'
     },
-    /**
-     * desc: 纯函数式排序,可选从大到小,从小到大
-     * @param {Array,string} arr
-     * return {Array} 
-     */
+/**
+* desc: 纯函数式排序,可选从大到小,从小到大
+* @param {Array,string} arr
+* return {Array} 
+*/
     arraySort:function(arr,type){
 		var pureArr = arr.map((x)=>x) || [];
 		var localType = type || "";
@@ -121,22 +121,22 @@ UJF.prototype={
 		}
         pureArr.sort(mapCallback);
         return pureArr;
-	},
-	/**
-	 * desc: 纯函数式去重数组
-	 * @param {Array} arr
-	 * return {Array}
-	 */
+    },
+/**
+* desc: 纯函数式去重数组
+* @param {Array} arr
+* return {Array}
+*/
     arrayDistinct:function(arr){
 		var pureArr = [...new Set(arr)];
         return pureArr;
         //return Array.from(pureArr);
 	},
-	/**
-	 * desc: 深拷贝对象
-	 * @param {Object} obj
-	 * return {Object}
-	 */
+/**
+* desc: 深拷贝对象
+* @param {Object} obj
+* return {Object}
+*/
     deepCopyObj:function(original){
         let copy = {}
         Object.keys(original).forEach(key=>{
@@ -144,12 +144,12 @@ UJF.prototype={
         })
         return copy
 	},
-	/**
-	 * desc: 解析Url查询参数为JSON
-	 * @param {string} Url
-	 * return {string}
-	 * eg:"http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&"→"{"a":"1","b":"2","c":"","d":"xxx"}"
-	 */
+/**
+* desc: 解析Url查询参数为JSON
+* @param {string} Url
+* return {string}
+* eg:"http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&"→"{"a":"1","b":"2","c":"","d":"xxx"}"
+*/
     resolveUrl:function(Url){
         "use strict"
         //'http://m.manaowan.com/index.html?a=1&b=2&c=&d=xxx&'→"a=1&b=2&c=&d=xxx&"
@@ -191,9 +191,9 @@ UJF.prototype={
         }
         return JSON.stringify(obj)
 	},
-	/**
-	 * desc: 缓存函数
-	 */
+/**
+ * desc: 缓存函数
+ */
     cached:function(fn) {
         var cache = Object.create(null);
         return (function cachedFn (str) {
@@ -201,11 +201,11 @@ UJF.prototype={
           return hit || (cache[str] = fn(str))
         })
 	  },
-	/**
-	 * desc: 驼峰化
-	 * @param {string} str
-	 * return {string}
-	 */
+/**
+ * desc: 驼峰化
+ * @param {string} str
+ * return {string}
+ */
     camlize:function(str){
         var camelizeRE = /-(\w)/g
         var result = str.replace(camelizeRE,function(_,w,offset,str){/*Cannot use p2/p3/p4,only four key parameters:match,word(s),offset,str*/
@@ -213,30 +213,30 @@ UJF.prototype={
         })
         return result
 	},
-	/**
-	 * desc: 连字符化
-	 * @param {string} str
-	 * return {string}
-	 */
+/**
+ * desc: 连字符化
+ * @param {string} str
+ * return {string}
+ */
     hyphenate:function(str){
         var hyphenateRE = /\B([A-Z])/g;
         return str.replace(hyphenateRE, function(_,c){
             return c?"-"+c.toLowerCase():''
         })
 	},
-	/**
-	 * desc: 对象自检键存在性
-	 * @param {Object,string}
-	 * return {Boolean}
-	 */
+/**
+ * desc: 对象自检键存在性
+ * @param {Object,string}
+ * return {Boolean}
+ */
     hasOwn:function(obj,key){
         return Object.prototype.hasOwnProperty.call(obj,key)
 	},
-	/**
-	 * desc: 截取数组
-	 * @param {Array,number}
-	 * return {Array}
-	 */
+/**
+ * desc: 截取数组
+ * @param {Array,number}
+ * return {Array}
+ */
     toArray: function(list, start) {
         start = start || 0;
         var i = list.length - start;
@@ -246,11 +246,11 @@ UJF.prototype={
         }
         return ret
 	},
-	/**
-	 * desc: 获取对象键数组，值数组和键值数组
-	 * @param {Object,boolean,boolean}
-	 * return {Array}
-	 */
+/**
+ * desc: 获取对象键数组，值数组和键值数组
+ * @param {Object,boolean,boolean}
+ * return {Array}
+ */
     getObjDetails:function(obj,getKey,getValue){
         var keysArr = [],valuesArr = [];
         var fullArr=[];
@@ -265,22 +265,22 @@ UJF.prototype={
                 :getValue?valuesArr
                 :[]
 	},
-	/**
-	 * desc: 扩展对象
-	 * @param {Object,Object}
-	 * return {Object}
-	 */
+/**
+ * desc: 扩展对象
+ * @param {Object,Object}
+ * return {Object}
+ */
     extendObj:function(extendedObj,sourceObj){
         for(var key in sourceObj){
             extendedObj[key] = sourceObj[key]
         }
         return extendedObj
 	},
-	/**
-	 * desc: 数组转对象
-	 * @param {Array}
-	 * return {Object}
-	 */
+/**
+ * desc: 数组转对象
+ * @param {Array}
+ * return {Object}
+ */
     arrToObj:function(arr){
         var obj = {}
         for(var i = 0;i<arr.length;i++){
@@ -288,23 +288,23 @@ UJF.prototype={
         }
         return obj
 	},
-	/**
-	 * desc: false get callback
-	 */
+/**
+ * desc: false get callback
+ */
     no:function(a,b,c){
         return false;
 	},
-	/**
-	 * desc: underscore get callback
-	 */
+/**
+ * desc: underscore get callback
+ */
     identity:function(_){
         return _;
 	},
-	/**
-	 * desc:获取数组最小值
-	 * @param {Array}
-	 * return {Object}
-	 */
+/**
+ * desc:获取数组最小值
+ * @param {Array}
+ * return {Object}
+ */
     arrMin:function(arr){
         var min = Math.min.apply(null,arr)
         var idx = arr.indexOf(min)
@@ -313,22 +313,22 @@ UJF.prototype={
         obj.idx = idx
         return obj
 	},
-	/**
-	 * desc: 获取小数位数
-	 */
+/**
+ * desc: 获取小数位数
+ */
     getDecimalLength:function (num){
         var numStr = num + ''
         var decimalLength = numStr.length-(numStr.indexOf('.')+1)
         return decimalLength
 	},
-	/**
-	 * desc: 纯函数式四舍五入
-	 */
+/**
+ * desc: 纯函数式四舍五入
+ */
     parFixed:function (value ,precision){
 		var pureValue = value || 3.1415926;
         return parseFloat((pureValue).toFixed(precision))
     },
-    /*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
+/*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
     decimalTest(x,y,z){
         var L = UJF.prototype.getDecimalLength
         var C = UJF.prototype.parFixed
