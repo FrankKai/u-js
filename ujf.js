@@ -334,6 +334,15 @@ UJF.prototype={
         var C = UJF.prototype.parFixed
         var maxDecimal = Math.min.apply(null,[L(x+y),L(z)])
         return C(x+y,maxDecimal) === C(z,maxDecimal)
+    },
+    /*toggle多选框数组中的数据*/
+    toggleData(item,list){
+    	var index = list.indexOf(item);
+	if( index > -1){
+	    list.splice(index, 1)
+	}else{
+            list.push(item);
+	}
     }
 }
 module.exports = UJF;
