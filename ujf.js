@@ -328,7 +328,9 @@ UJF.prototype={
 		var pureValue = value || 3.1415926;
         return parseFloat((pureValue).toFixed(precision))
     },
-/*在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？*/
+/*
+* desc: 在不知道浮点数位数时应该怎样判断两个浮点数之和与第三数是否相等？
+*/
     decimalTest(x,y,z){
         var L = UJF.prototype.getDecimalLength
         var C = UJF.prototype.parFixed
@@ -338,11 +340,20 @@ UJF.prototype={
     /*toggle多选框数组中的数据*/
     toggleData(item,list){
     	var index = list.indexOf(item);
-	if( index > -1){
-	    list.splice(index, 1)
-	}else{
+        if( index > -1){
+            list.splice(index, 1)
+        }else{
             list.push(item);
-	}
+        }
+    },
+/**
+ * desc: 分页算法
+ */
+    controlPagArr(data,pageSize,pageNo){
+        var arr = data;
+        var index = pageSize * (pageNo -1);
+        var length = pageSize;
+        return arr.splice(index,length);
     }
 }
 module.exports = UJF;
