@@ -312,7 +312,14 @@ UJF.prototype={
         obj.min = min
         obj.idx = idx
         return obj
-	},
+    },
+/**
+ * desc: 清空数组
+ */
+    clearArray:function(arr){
+        var length = arr.length;
+        arr.splice(0,length);
+    },
 /**
  * desc: 获取小数位数
  */
@@ -337,9 +344,11 @@ UJF.prototype={
         var maxDecimal = Math.min.apply(null,[L(x+y),L(z)])
         return C(x+y,maxDecimal) === C(z,maxDecimal)
     },
-    /*toggle多选框数组中的数据*/
+/*
+* desc: toggle多选框数组中的数据
+*/
     toggleData(item,list){
-    	var index = list.indexOf(item);
+        var index = list.indexOf(item);
         if( index > -1){
             list.splice(index, 1)
         }else{
