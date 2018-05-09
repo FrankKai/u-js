@@ -363,6 +363,19 @@ UJF.prototype={
         var index = pageSize * (pageNo -1);
         var length = pageSize;
         return arr.splice(index,length);
+    },
+/**
+ * desc: 最小值算法
+ */
+    minNumber(){
+        function compare(foo,bar){
+            return foo<bar?foo:bar;
+        }
+        var min = arguments[0] || 0;
+        for(var i=0;i<arguments.length-1;i++){
+            min = compare(min,arguments[i+1]);
+        }
+        return min;
     }
 }
 module.exports = UJF;
