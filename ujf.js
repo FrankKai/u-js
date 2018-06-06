@@ -133,7 +133,7 @@ UJF.prototype={
         //return Array.from(pureArr);
 	},
 /**
-* desc: 深拷贝对象
+* desc: 深拷贝单层对象
 * @param {Object} obj
 * return {Object}
 */
@@ -376,6 +376,28 @@ UJF.prototype={
             min = compare(min,arguments[i+1]);
         }
         return min;
+    },
+/**
+ * desc: 深拷贝算法
+ */
+    deepCopy(data){
+        let memory = null;
+        const type = Object.prototype.toString.call(data);
+        if (type === "[object Array]"){
+            memory = []
+            for (let i=0 ;i<data.length;i++){
+                memory.push(UJF.deepCopy(data[i]))
+            }
+        }else if (type === "[object Object]"){
+            memory = {}
+            Object.keys[data].forEach((key)=>{
+                memory[key] = data[key]
+            })
+        }else{
+            return data;
+        }
+        return memory;
     }
 }
+
 module.exports = UJF;
