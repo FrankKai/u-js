@@ -53,3 +53,5 @@ squash
 squash 1
 
 rebase 0
+
+rebase 1
