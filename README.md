@@ -47,17 +47,16 @@ ujf.hyphenate(str)
 //小数精度丢失问题
 ujf.decimalTest(x,y,z)
 ```
+C2
 
-foo
-
-bar
+C4
+sdfaf
 
 nb
-
+sdfsaf
 hh
+ttttt0000
 
-ttttt
 
-0000
 
-C3
+111111
