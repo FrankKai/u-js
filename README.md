@@ -49,3 +49,5 @@ ujf.decimalTest(x,y,z)
 ```
 
 squash
+
+squash 1
