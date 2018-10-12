@@ -47,6 +47,4 @@ ujf.hyphenate(str)
 //小数精度丢失问题
 ujf.decimalTest(x,y,z)
 ```
-master 1
-
-master 2
+start
