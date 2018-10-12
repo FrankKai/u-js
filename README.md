@@ -48,3 +48,5 @@ ujf.hyphenate(str)
 ujf.decimalTest(x,y,z)
 ```
 master 1
+
+master 2
