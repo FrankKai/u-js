@@ -1,6 +1,6 @@
 {
   "name": "ujf",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fullname is Useful-Js-Functions，my own javascript function library.",
   "main": "ujf.js",
   "scripts": {
