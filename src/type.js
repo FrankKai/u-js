@@ -1,9 +1,13 @@
+import util from "util";
+import { Buffer } from "buffer";
+
 const toString = Object.prototype.toString;
 const isNaNNative = Number.isNaN;
-const isProxyNative = util.types.isProxy;
+const isProxyNative = window ? null : util.types.isProxy;
+const isBuffer = Buffer.isBuffer;
 
 /**
- * @param {string|Proxy} value The value to be checked
+ * @param {string} value The value to be checked
  * @return {boolean} Return true when it's a string
  */
 
@@ -148,14 +152,6 @@ function isWeakSet(value) {
 }
 
 /**
- * @param {Proxy} value The value to be checked
- * @return {boolean} Return true when it's a WeakSet
- */
-function isWeakSet(value) {
-  return toString.call(value) === "[object WeakSet]";
-}
-
-/**
  * @param {ArrayBuffer} value The value to be checked
  * @return {boolean} Return true when it's a ArrayBuffer
  */
@@ -200,7 +196,10 @@ function isURLSearchParams(value) {
  * @return {boolean} Return true when it's a Proxy
  */
 function isProxy(value) {
-  return isProxyNative(value);
+  if (isProxyNative) {
+    return isProxyNative(value);
+  }
+  return new Error("Proxy Check No Support");
 }
 
 /**
@@ -208,11 +207,12 @@ function isProxy(value) {
  * @return {boolean} Return true when it's a Object
  */
 function isObject(value) {
-  return (
-    value !== null &&
-    !isProxy(value) &&
-    toString.call(value) === "[object Object]"
-  );
+  const result = value !== null && toString.call(value) === "[object Object]";
+  const isSupportProxy = !isError(isProxy());
+  if (isSupportProxy) {
+    return result && isProxy(value);
+  }
+  return result;
 }
 
 /**
@@ -255,5 +255,6 @@ export {
   isURLSearchParams,
   isProxy,
   isObject,
-  isJSON
+  isJSON,
+  isBuffer
 };
