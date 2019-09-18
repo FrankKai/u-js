@@ -1,0 +1,223 @@
+const toString = Object.prototype.toString;
+const isNaNNative = Number.isNaN;
+const isProxyNative = util.types.isProxy;
+
+/**
+ * @param {string|Proxy} value The value to be checked
+ * @return {boolean} Return true when it's a string
+ */
+
+function isString(value) {
+  return toString.call(value) === "[object String]";
+}
+
+/**
+ * @param {number} value The value to be checked
+ * @return {boolean} Return true when it's a number
+ */
+function isNumber(value) {
+  return toString.call(value) === "[object Number]";
+}
+
+/**
+ * @param {boolean} value The value to be checked
+ * @return {boolean} Return true when it's a boolean
+ */
+function isBoolean(value) {
+  return toString.call(value) === "[object Boolean]";
+}
+
+/**
+ * @param {undefined} value The value to be checked
+ * @return {boolean} Return true when it's a undefined
+ */
+function isUndefined(value) {
+  return toString.call(value) === "[object Undefined]";
+}
+
+/**
+ * @param {null} value The value to be checked
+ * @return {boolean} Return true when it's a null
+ */
+function isNull(value) {
+  return toString.call(value) === "[object Null]";
+}
+
+/**
+ * @param {NaN} value The value to be checked
+ * @return {boolean} Return true when it's a NaN
+ */
+function isNaN(value) {
+  return isNaNNative(value) && toString.call(value) === "[object Number]";
+}
+
+/**
+ * @param {Array} value The value to be checked
+ * @return {boolean} Return true when it's a Array
+ */
+function isArray(value) {
+  return toString.call(value) === "[object Array]";
+}
+
+/**
+ * @param {Function} value The value to be checked
+ * @return {boolean} Return true when it's a Function
+ */
+function isFunction(value) {
+  return toString.call(value) === "[object Function]";
+}
+
+/**
+ * @param {Date} value The value to be checked
+ * @return {boolean} Return true when it's a Date
+ */
+function isDate(value) {
+  return toString.call(value) === "[object Date]";
+}
+
+/**
+ * @param {RegExp} value The value to be checked
+ * @return {boolean} Return true when it's a RegExp
+ */
+function isRegExp(value) {
+  return toString.call(value) === "[object RegExp]";
+}
+
+/**
+ * @param {Error} value The value to be checked
+ * @return {boolean} Return true when it's a Error
+ */
+function isError(value) {
+  return toString.call(value) === "[object Error]";
+}
+
+/**
+ * @param {Promise} value The value to be checked
+ * @return {boolean} Return true when it's a Promise
+ */
+function isPromise(value) {
+  return toString.call(value) === "[object Promise]";
+}
+
+/**
+ * @param {Symbol} value The value to be checked
+ * @return {boolean} Return true when it's a Symbol
+ */
+function isSymbol(value) {
+  return toString.call(value) === "[object Symbol]";
+}
+
+/**
+ * @param {BigInt} value The value to be checked
+ * @return {boolean} Return true when it's a BigInt
+ */
+function isBigInt(value) {
+  return toString.call(value) === "[object BigInt]";
+}
+
+/**
+ * @param {Map} value The value to be checked
+ * @return {boolean} Return true when it's a Map
+ */
+function isMap(value) {
+  return toString.call(value) === "[object Map]";
+}
+
+/**
+ * @param {Set} value The value to be checked
+ * @return {boolean} Return true when it's a Set
+ */
+function isSet(value) {
+  return toString.call(value) === "[object Set]";
+}
+
+/**
+ * @param {WeakMap} value The value to be checked
+ * @return {boolean} Return true when it's a WeakMap
+ */
+function isWeakMap(value) {
+  return toString.call(value) === "[object WeakMap]";
+}
+
+/**
+ * @param {WeakSet} value The value to be checked
+ * @return {boolean} Return true when it's a WeakSet
+ */
+function isWeakSet(value) {
+  return toString.call(value) === "[object WeakSet]";
+}
+
+/**
+ * @param {Proxy} value The value to be checked
+ * @return {boolean} Return true when it's a WeakSet
+ */
+function isWeakSet(value) {
+  return toString.call(value) === "[object WeakSet]";
+}
+
+/**
+ * @param {ArrayBuffer} value The value to be checked
+ * @return {boolean} Return true when it's a ArrayBuffer
+ */
+function isArrayBuffer(value) {
+  return toString.call(value) === "[object ArrayBuffer]";
+}
+
+/**
+ * @param {Proxy} value The value to be checked
+ * @return {boolean} Return true when it's a Proxy
+ */
+function isProxy(value) {
+  return isProxyNative(value);
+}
+
+/**
+ * @param {Object} value The value to be checked
+ * @return {boolean} Return true when it's a Object
+ */
+function isObject(value) {
+  return (
+    value !== null &&
+    !isProxy(value) &&
+    toString.call(value) === "[object Object]"
+  );
+}
+
+/**
+ * @param {JSON} value The value to be checked
+ * @return {boolean} Return true when it's a JSON
+ */
+
+function isJSON(value) {
+  try {
+    JSON.parse(value);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+export {
+  isString,
+  isNumber,
+  isBoolean,
+  isUndefined,
+  isNull,
+  isNaN,
+  isArray,
+  isFunction,
+  isDate,
+  isRegExp,
+  isError,
+  isPromise,
+  isSymbol,
+  isBigInt,
+  isMap,
+  isSet,
+  isWeakMap,
+  isWeakSet,
+  isArrayBuffer,
+  isProxy,
+  isObject,
+  isJSON
+};
