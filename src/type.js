@@ -164,6 +164,38 @@ function isArrayBuffer(value) {
 }
 
 /**
+ * @param {FormData} value The value to be checked
+ * @return {boolean} Return true when it's a FormData
+ */
+function isFormData(value) {
+  return toString.call(value) === "[object FormData]";
+}
+
+/**
+ * @param {Blob} value The value to be checked
+ * @return {boolean} Return true when it's a Blob
+ */
+function isBlob(value) {
+  return toString.call(value) === "[object Blob]";
+}
+
+/**
+ * @param {File} value The value to be checked
+ * @return {boolean} Return true when it's a File
+ */
+function isFile(value) {
+  return toString.call(value) === "[object File]";
+}
+
+/**
+ * @param {URLSearchParams} value The value to be checked
+ * @return {boolean} Return true when it's a URLSearchParams
+ */
+function isURLSearchParams(value) {
+  return toString.call(value) === "[object URLSearchParams]";
+}
+
+/**
  * @param {Proxy} value The value to be checked
  * @return {boolean} Return true when it's a Proxy
  */
@@ -217,6 +249,10 @@ export {
   isWeakMap,
   isWeakSet,
   isArrayBuffer,
+  isFormData,
+  isBlob,
+  isFile,
+  isURLSearchParams,
   isProxy,
   isObject,
   isJSON
