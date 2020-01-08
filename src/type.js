@@ -1,10 +1,10 @@
-const util = require("util");
-const Buffer = require("buffer");
+// const util = require("util");
+// const Buffer = require("buffer");
 
 const toString = Object.prototype.toString;
 const isNaNNative = Number.isNaN;
-const isProxyNative = window ? null : util.types.isProxy;
-const isBuffer = Buffer.isBuffer;
+// const isProxyNative = window ? null : util.types.isProxy;
+// const isBuffer = Buffer.isBuffer;
 
 /**
  * @param {string} value The value to be checked
@@ -191,16 +191,16 @@ function isURLSearchParams(value) {
   return toString.call(value) === "[object URLSearchParams]";
 }
 
-/**
- * @param {Proxy} value The value to be checked
- * @return {boolean} Return true when it's a Proxy
- */
-function isProxy(value) {
-  if (isProxyNative) {
-    return isProxyNative(value);
-  }
-  return new Error("Proxy Check No Support");
-}
+// /**
+//  * @param {Proxy} value The value to be checked
+//  * @return {boolean} Return true when it's a Proxy
+//  */
+// function isProxy(value) {
+//   if (isProxyNative) {
+//     return isProxyNative(value);
+//   }
+//   return new Error("Proxy Check No Support");
+// }
 
 /**
  * @param {Object} value The value to be checked
@@ -253,8 +253,8 @@ module.exports = {
   isBlob,
   isFile,
   isURLSearchParams,
-  isProxy,
+  // isProxy,
   isObject,
   isJSON,
-  isBuffer
+  // isBuffer
 };
