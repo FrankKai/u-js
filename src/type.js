@@ -1,5 +1,5 @@
-import util from "util";
-import { Buffer } from "buffer";
+const util = require("util");
+const Buffer = require("buffer");
 
 const toString = Object.prototype.toString;
 const isNaNNative = Number.isNaN;
@@ -229,7 +229,7 @@ function isJSON(value) {
   return true;
 }
 
-export default {
+module.exports = {
   isString,
   isNumber,
   isBoolean,

@@ -120,10 +120,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"audio.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 /**
  * * 功能：获取音频文件时长(audio duration)
  * * 思路：创建伪<audio>，加载audio文件，<audio>的durationChange事件触发获得duration
@@ -145,15 +141,11 @@ function getAudioDuration(source) {
   });
 }
 
-exports["default"] = {
+module.exports = {
   getAudioDuration: getAudioDuration
 };
 },{}],"blob.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -199,7 +191,7 @@ function _transferBlobFileToBase() {
   return _transferBlobFileToBase.apply(this, arguments);
 }
 
-exports["default"] = {
+module.exports = {
   transferBlobFileToBase64: transferBlobFileToBase64
 };
 },{}],"../../../.config/yarn/global/node_modules/util/support/isBufferBrowser.js":[function(require,module,exports) {
@@ -3205,24 +3197,17 @@ function isnan (val) {
 }
 
 },{"base64-js":"../../../.config/yarn/global/node_modules/base64-js/index.js","ieee754":"../../../.config/yarn/global/node_modules/ieee754/index.js","isarray":"../../../.config/yarn/global/node_modules/isarray/index.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"type.js":[function(require,module,exports) {
+
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var util = require("util");
 
-var _util = require("util");
-
-var _util2 = _interopRequireDefault(_util);
-
-var _buffer = require("buffer");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var Buffer = require("buffer");
 
 var toString = Object.prototype.toString;
 var isNaNNative = Number.isNaN;
-var isProxyNative = window ? null : _util2["default"].types.isProxy;
-var isBuffer = _buffer.Buffer.isBuffer;
+var isProxyNative = window ? null : util.types.isProxy;
+var isBuffer = Buffer.isBuffer;
 /**
  * @param {string} value The value to be checked
  * @return {boolean} Return true when it's a string
@@ -3474,7 +3459,7 @@ function isJSON(value) {
   return true;
 }
 
-exports["default"] = {
+module.exports = {
   isString: isString,
   isNumber: isNumber,
   isBoolean: isBoolean,
@@ -3506,24 +3491,16 @@ exports["default"] = {
 },{"util":"../../../.config/yarn/global/node_modules/util/util.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _audio = require("./audio");
+var audio = require("./audio");
 
-var _audio2 = _interopRequireDefault(_audio);
+var blob = require("./blob");
 
-var _blob = require("./blob");
-
-var _blob2 = _interopRequireDefault(_blob);
-
-var _type = require("./type");
-
-var _type2 = _interopRequireDefault(_type);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var type = require("./type");
 
 module.exports = {
-  audio: _audio2["default"],
-  blob: _blob2["default"],
-  type: _type2["default"]
+  audio: audio,
+  blob: blob,
+  type: type
 };
 },{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -3553,7 +3530,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62694" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50430" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

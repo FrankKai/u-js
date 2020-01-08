@@ -18,4 +18,5 @@ function getAudioDuration(source) {
     };
   });
 }
-export default { getAudioDuration };
+
+module.exports = { getAudioDuration };

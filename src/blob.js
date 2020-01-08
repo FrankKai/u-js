@@ -16,4 +16,5 @@ async function transferBlobFileToBase64(file) {
     };
   });
 }
-export default { transferBlobFileToBase64 };
+
+module.exports = { transferBlobFileToBase64 };
