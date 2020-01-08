@@ -1,14 +1,14 @@
 {
   "name": "ujf",
-  "version": "0.0.3",
-  "description": "Fullname is Useful-Js-Functions，my own javascript function library.",
-  "main": "src/index.js",
+  "version": "0.0.6",
+  "description": "Utils for frontend or nodejs developers, fullname is Useful JS Functions",
+  "main": "dist/index.js",
   "scripts": {
     "main-compile": "babel ujf.js --presets env -o ujf.common.js",
     "test-compile": "babel test --presets env -d test-compile",
     "src-compile": "babel src --presets env -d ./src-compile",
     "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js",
-    "index-compile": "babel ./src/index.js --presets env -o ./src/index.common.js"
+    "parcel-umd": "parcel serve ./src/index.js"
   },
   "repository": {
     "type": "git",
