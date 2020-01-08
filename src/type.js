@@ -229,7 +229,7 @@ function isJSON(value) {
   return true;
 }
 
-export {
+export default {
   isString,
   isNumber,
   isBoolean,
