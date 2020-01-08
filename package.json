@@ -8,7 +8,8 @@
     "test-compile": "babel test --presets env -d test-compile",
     "src-compile": "babel src --presets env -d ./src-compile",
     "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js",
-    "parcel-umd": "parcel serve ./src/index.js"
+    "parcel-umd:build": "parcel serve ./src/index.js",
+    "npm:publish": "npm publish --registry http://registry.npmjs.org"
   },
   "repository": {
     "type": "git",

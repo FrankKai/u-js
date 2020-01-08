@@ -3210,7 +3210,6 @@ function isnan (val) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isBuffer = exports.isJSON = exports.isObject = exports.isProxy = exports.isURLSearchParams = exports.isFile = exports.isBlob = exports.isFormData = exports.isArrayBuffer = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isBigInt = exports.isSymbol = exports.isPromise = exports.isError = exports.isRegExp = exports.isDate = exports.isFunction = exports.isArray = exports.isNaN = exports.isNull = exports.isUndefined = exports.isBoolean = exports.isNumber = exports.isString = undefined;
 
 var _util = require("util");
 
@@ -3475,33 +3474,35 @@ function isJSON(value) {
   return true;
 }
 
-exports.isString = isString;
-exports.isNumber = isNumber;
-exports.isBoolean = isBoolean;
-exports.isUndefined = isUndefined;
-exports.isNull = isNull;
-exports.isNaN = isNaN;
-exports.isArray = isArray;
-exports.isFunction = isFunction;
-exports.isDate = isDate;
-exports.isRegExp = isRegExp;
-exports.isError = isError;
-exports.isPromise = isPromise;
-exports.isSymbol = isSymbol;
-exports.isBigInt = isBigInt;
-exports.isMap = isMap;
-exports.isSet = isSet;
-exports.isWeakMap = isWeakMap;
-exports.isWeakSet = isWeakSet;
-exports.isArrayBuffer = isArrayBuffer;
-exports.isFormData = isFormData;
-exports.isBlob = isBlob;
-exports.isFile = isFile;
-exports.isURLSearchParams = isURLSearchParams;
-exports.isProxy = isProxy;
-exports.isObject = isObject;
-exports.isJSON = isJSON;
-exports.isBuffer = isBuffer;
+exports["default"] = {
+  isString: isString,
+  isNumber: isNumber,
+  isBoolean: isBoolean,
+  isUndefined: isUndefined,
+  isNull: isNull,
+  isNaN: isNaN,
+  isArray: isArray,
+  isFunction: isFunction,
+  isDate: isDate,
+  isRegExp: isRegExp,
+  isError: isError,
+  isPromise: isPromise,
+  isSymbol: isSymbol,
+  isBigInt: isBigInt,
+  isMap: isMap,
+  isSet: isSet,
+  isWeakMap: isWeakMap,
+  isWeakSet: isWeakSet,
+  isArrayBuffer: isArrayBuffer,
+  isFormData: isFormData,
+  isBlob: isBlob,
+  isFile: isFile,
+  isURLSearchParams: isURLSearchParams,
+  isProxy: isProxy,
+  isObject: isObject,
+  isJSON: isJSON,
+  isBuffer: isBuffer
+};
 },{"util":"../../../.config/yarn/global/node_modules/util/util.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -3552,7 +3553,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59903" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62694" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
