@@ -3505,11 +3505,6 @@ exports.isBuffer = isBuffer;
 },{"util":"../../../.config/yarn/global/node_modules/util/util.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.type = exports.blob = exports.audio = undefined;
-
 var _audio = require("./audio");
 
 var _audio2 = _interopRequireDefault(_audio);
@@ -3524,9 +3519,11 @@ var _type2 = _interopRequireDefault(_type);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-exports.audio = _audio2["default"];
-exports.blob = _blob2["default"];
-exports.type = _type2["default"];
+module.exports = {
+  audio: _audio2["default"],
+  blob: _blob2["default"],
+  type: _type2["default"]
+};
 },{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3555,7 +3552,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58685" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59903" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
