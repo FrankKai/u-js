@@ -9,9 +9,10 @@ Fullname is Useful JS Functions，my own javascript function library across Brow
 ### Install
 ```
 // if you have installed yarn
-yarn add ujf
+$ yarn add ujf
+
 // npm is also a choice
-npm install ujf
+$ npm install ujf
 ```
 
 ### Features
