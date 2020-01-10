@@ -8,8 +8,9 @@
     "test-compile": "babel test --presets env -d test-compile",
     "src-compile": "babel src --presets env -d ./src-compile",
     "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js",
-    "parcel-build:umd": "parcel serve ./src/index.js",
-    "parcel-build:node": "parcel ./src/index.js --target node",
+    "parcel-build:node": "parcel ./src/index.js --target node --out-dir adapters/node",
+    "parcel-build:browser": "parcel ./src/index.js --target browser --out-dir adapters/browser",
+    "parcel-build:umd": "parcel serve ./adapters/index.js --global UJF --out-dir dist",
     "publish:patch": "npm version patch && npm publish --registry http://registry.npmjs.org && git push",
     "publish:minor": "npm version minor && npm publish --registry http://registry.npmjs.org && git push",
     "publish:major": "npm version major && npm publish --registry http://registry.npmjs.org && git push"
