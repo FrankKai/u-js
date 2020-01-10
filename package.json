@@ -10,9 +10,9 @@
     "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js",
     "parcel-build:umd": "parcel serve ./src/index.js",
     "parcel-build:node": "parcel ./src/index.js --target node",
-    "publish:patch": "npm version patch && npm publish --registry http://registry.npmjs.org",
-    "publish:minor": "npm version minor && npm publish --registry http://registry.npmjs.org",
-    "publish:major": "npm version major && npm publish --registry http://registry.npmjs.org"
+    "publish:patch": "npm version patch && npm publish --registry http://registry.npmjs.org && git push",
+    "publish:minor": "npm version minor && npm publish --registry http://registry.npmjs.org && git push",
+    "publish:major": "npm version major && npm publish --registry http://registry.npmjs.org && git push"
   },
   "repository": {
     "type": "git",
