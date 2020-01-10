@@ -1,5 +1,10 @@
 const audioLoad = require("audio-loader");
-
+const isBrowser = new Function(
+  "try {return this===window;}catch(e){ return false;}"
+);
+const isNode = new Function(
+  "try {return this===global;}catch(e){return false;}"
+);
 /**
  * * 功能：获取音频文件时长(audio duration)
  * * 思路：创建伪<audio>，加载audio文件，<audio>的durationChange事件触发获得duration
@@ -11,7 +16,7 @@ const audioLoad = require("audio-loader");
 
 function getAudioDuration(source) {
   return new Promise(resolve => {
-    if (typeof window !== "undefined") {
+    if (isBrowser()) {
       const audioElement = document.createElement("audio");
       const src =
         typeof source === "string"
@@ -24,8 +29,7 @@ function getAudioDuration(source) {
         URL.revokeObjectURL(audioElement.src);
       };
     }
-    if (typeof global !== "undefined") {
-      console.log(source);
+    if (isNode()) {
       audioLoad(source).then(function(buffer) {
         resolve(buffer.duration);
       });

@@ -1,3 +1,10 @@
+const isBrowser = new Function(
+  "try {return this===window;}catch(e){ return false;}"
+);
+const isNode = new Function(
+  "try {return this===global;}catch(e){return false;}"
+);
+
 /**
  * * 功能：转换Blob和File为Base64 string
  * * 思路：创建FileReader实例，读取file文件，FileReader实例的loadend事件触发获得duration
@@ -8,7 +15,7 @@
  */
 function transferBlobFileToBase64(source) {
   return new Promise(resolve => {
-    if (typeof window !== "undefined") {
+    if (isBrowser()) {
       const reader = new FileReader();
       reader.readAsDataURL(source);
       reader.onloadend = () => {
@@ -16,7 +23,7 @@ function transferBlobFileToBase64(source) {
         resolve(fileBase64);
       };
     }
-    if (typeof global !== "undefined") {
+    if (isNode()) {
       const fileBase64 = new Buffer.from(source).toString("base64");
       resolve(fileBase64);
     }
