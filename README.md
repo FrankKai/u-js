@@ -6,8 +6,16 @@ Fullname is Useful JS Functions，my own javascript function library across Brow
 - Common audio processing utils
 - Common blob processing utils
 
+### Install
+```
+// if you have installed yarn
+yarn add ujf
+// npm is also a choice
+npm install ujf
+```
 
-### Type Check
+### Features
+#### Type Check
 ```
 isString
 isNumber
@@ -36,7 +44,7 @@ isObject
 isJSON
 ```
 
-#### Examples
+##### Examples
 ```js
 // Browser Environment
 import { type as typeUtils } from 'ujf';
@@ -54,13 +62,13 @@ const isNumberTest = type.isNumber("No, I'm a string.");
 console.log(isNumberTest); // false
 ```
 
-### Audio Processing
+#### Audio Processing
 - getAudioDuration(source) 
   - source 
     - { File | Blob | Url } Browser
     - { Url | Path } Node.js
 
-#### Examples
+##### Examples
 ```js
 // Browser Environment
 import { audio as audioUtils } from 'ujf';
@@ -82,7 +90,7 @@ audio.getAudioDuration("../996.mp3").then(duration => {
     - { File | Blob } Browser
     - { ArrayBuffer } Node.js
 
-#### Examples
+##### Examples
 ```js
 // Browser Environment
 import { blob as blobUtils } from 'ujf';
