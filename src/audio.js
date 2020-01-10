@@ -13,7 +13,11 @@ function getAudioDuration(source) {
   return new Promise(resolve => {
     if (typeof window !== "undefined") {
       const audioElement = document.createElement("audio");
-      audioElement.src = window.URL.createObjectURL(source);
+      const src =
+        typeof source === "string"
+          ? source
+          : window.URL.createObjectURL(source);
+      audioElement.src = src;
       audioElement.ondurationchange = e => {
         const duration = e.path[0].duration;
         resolve(duration);
