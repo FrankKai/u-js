@@ -120,24 +120,36 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"audio.js":[function(require,module,exports) {
 "use strict";
 
+var audioLoad = require("audio-loader");
 /**
  * * 功能：获取音频文件时长(audio duration)
  * * 思路：创建伪<audio>，加载audio文件，<audio>的durationChange事件触发获得duration
  * * 作者：高凯
  * * 日期：2019/11/7
- * @param {File|Url} source The source to be analyse
+ * @param source { File | Blob | Url } Browser, { Url | Path } Node.js
  * @return {number} Return the audio's duration
  */
+
+
 function getAudioDuration(source) {
   return new Promise(function (resolve) {
-    var audioElement = document.createElement("audio");
-    audioElement.src = window.URL.createObjectURL(source);
+    if (typeof window !== "undefined") {
+      var audioElement = document.createElement("audio");
+      audioElement.src = window.URL.createObjectURL(source);
 
-    audioElement.ondurationchange = function (e) {
-      var duration = e.path[0].duration;
-      resolve(duration);
-      URL.revokeObjectURL(audioElement.src);
-    };
+      audioElement.ondurationchange = function (e) {
+        var duration = e.path[0].duration;
+        resolve(duration);
+        URL.revokeObjectURL(audioElement.src);
+      };
+    }
+
+    if (typeof global !== "undefined") {
+      console.log(source);
+      audioLoad(source).then(function (buffer) {
+        resolve(buffer.duration);
+      });
+    }
   });
 }
 
@@ -147,48 +159,31 @@ module.exports = {
 },{}],"blob.js":[function(require,module,exports) {
 "use strict";
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /**
  * * 功能：转换Blob和File为Base64 string
  * * 思路：创建FileReader实例，读取file文件，FileReader实例的loadend事件触发获得duration
  * * 作者：高凯
  * * 日期：2019/11/8
- * @param {Blob|File} file The file to be transform
- * @return {number} Return the file's Base64 string
+ * @param source { Blob | File } Browser, { ArrayBuffer } Node.js
+ * @return {string} Return the file's Base64 string
  */
-function transferBlobFileToBase64(_x) {
-  return _transferBlobFileToBase.apply(this, arguments);
-}
+function transferBlobFileToBase64(source) {
+  return new Promise(function (resolve) {
+    if (typeof window !== "undefined") {
+      var reader = new FileReader();
+      reader.readAsDataURL(source);
 
-function _transferBlobFileToBase() {
-  _transferBlobFileToBase = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(file) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt("return", new Promise(function (resolve) {
-              var reader = new FileReader();
-              reader.readAsDataURL(file);
+      reader.onloadend = function () {
+        var fileBase64 = reader.result;
+        resolve(fileBase64);
+      };
+    }
 
-              reader.onloadend = function () {
-                var fileBase64 = reader.result;
-                resolve(fileBase64);
-              };
-            }));
-
-          case 1:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _transferBlobFileToBase.apply(this, arguments);
+    if (typeof global !== "undefined") {
+      var fileBase64 = new Buffer.from(source).toString("base64");
+      resolve(fileBase64);
+    }
+  });
 }
 
 module.exports = {
@@ -494,209 +489,5 @@ module.exports = {
   blob: blob,
   type: type
 };
-},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
-var global = arguments[3];
-var OVERLAY_ID = '__parcel__error__overlay__';
-var OldModule = module.bundle.Module;
-
-function Module(moduleName) {
-  OldModule.call(this, moduleName);
-  this.hot = {
-    data: module.bundle.hotData,
-    _acceptCallbacks: [],
-    _disposeCallbacks: [],
-    accept: function (fn) {
-      this._acceptCallbacks.push(fn || function () {});
-    },
-    dispose: function (fn) {
-      this._disposeCallbacks.push(fn);
-    }
-  };
-  module.bundle.hotData = null;
-}
-
-module.bundle.Module = Module;
-var checkedAssets, assetsToAccept;
-var parent = module.bundle.parent;
-
-if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = "" || location.hostname;
-  var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61994" + '/');
-
-  ws.onmessage = function (event) {
-    checkedAssets = {};
-    assetsToAccept = [];
-    var data = JSON.parse(event.data);
-
-    if (data.type === 'update') {
-      var handled = false;
-      data.assets.forEach(function (asset) {
-        if (!asset.isNew) {
-          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
-          if (didAccept) {
-            handled = true;
-          }
-        }
-      }); // Enable HMR for CSS by default.
-
-      handled = handled || data.assets.every(function (asset) {
-        return asset.type === 'css' && asset.generated.js;
-      });
-
-      if (handled) {
-        console.clear();
-        data.assets.forEach(function (asset) {
-          hmrApply(global.parcelRequire, asset);
-        });
-        assetsToAccept.forEach(function (v) {
-          hmrAcceptRun(v[0], v[1]);
-        });
-      } else if (location.reload) {
-        // `location` global exists in a web worker context but lacks `.reload()` function.
-        location.reload();
-      }
-    }
-
-    if (data.type === 'reload') {
-      ws.close();
-
-      ws.onclose = function () {
-        location.reload();
-      };
-    }
-
-    if (data.type === 'error-resolved') {
-      console.log('[parcel] ✨ Error resolved');
-      removeErrorOverlay();
-    }
-
-    if (data.type === 'error') {
-      console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
-      removeErrorOverlay();
-      var overlay = createErrorOverlay(data);
-      document.body.appendChild(overlay);
-    }
-  };
-}
-
-function removeErrorOverlay() {
-  var overlay = document.getElementById(OVERLAY_ID);
-
-  if (overlay) {
-    overlay.remove();
-  }
-}
-
-function createErrorOverlay(data) {
-  var overlay = document.createElement('div');
-  overlay.id = OVERLAY_ID; // html encode message and stack trace
-
-  var message = document.createElement('div');
-  var stackTrace = document.createElement('pre');
-  message.innerText = data.error.message;
-  stackTrace.innerText = data.error.stack;
-  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
-  return overlay;
-}
-
-function getParents(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return [];
-  }
-
-  var parents = [];
-  var k, d, dep;
-
-  for (k in modules) {
-    for (d in modules[k][1]) {
-      dep = modules[k][1][d];
-
-      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
-        parents.push(k);
-      }
-    }
-  }
-
-  if (bundle.parent) {
-    parents = parents.concat(getParents(bundle.parent, id));
-  }
-
-  return parents;
-}
-
-function hmrApply(bundle, asset) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (modules[asset.id] || !bundle.parent) {
-    var fn = new Function('require', 'module', 'exports', asset.generated.js);
-    asset.isNew = !modules[asset.id];
-    modules[asset.id] = [fn, asset.deps];
-  } else if (bundle.parent) {
-    hmrApply(bundle.parent, asset);
-  }
-}
-
-function hmrAcceptCheck(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (!modules[id] && bundle.parent) {
-    return hmrAcceptCheck(bundle.parent, id);
-  }
-
-  if (checkedAssets[id]) {
-    return;
-  }
-
-  checkedAssets[id] = true;
-  var cached = bundle.cache[id];
-  assetsToAccept.push([bundle, id]);
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    return true;
-  }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id);
-  });
-}
-
-function hmrAcceptRun(bundle, id) {
-  var cached = bundle.cache[id];
-  bundle.hotData = {};
-
-  if (cached) {
-    cached.hot.data = bundle.hotData;
-  }
-
-  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
-    cached.hot._disposeCallbacks.forEach(function (cb) {
-      cb(bundle.hotData);
-    });
-  }
-
-  delete bundle.cache[id];
-  bundle(id);
-  cached = bundle.cache[id];
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    cached.hot._acceptCallbacks.forEach(function (cb) {
-      cb();
-    });
-
-    return true;
-  }
-}
-},{}]},{},["../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}]},{},["index.js"], null)
 //# sourceMappingURL=/index.js.map
