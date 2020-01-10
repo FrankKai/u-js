@@ -1,6 +1,6 @@
 {
   "name": "ujf",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Utils for frontend or nodejs developers, fullname is Useful JS Functions",
   "main": "dist/index.js",
   "scripts": {
