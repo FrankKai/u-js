@@ -1,12 +1,16 @@
 ## UJF（Useful JS Functions）
+
 Fullname is Useful JS Functions，my own javascript function library across Browser and Node.js.
 
 - Support for Browser and Node.js
 - Common type checks utils
 - Common audio processing utils
 - Common blob processing utils
+- Common task flow control utils
+- Common timer trick utils
 
 ### Install
+
 ```
 // if you have installed yarn
 $ yarn add ujf
@@ -16,7 +20,15 @@ $ npm install ujf
 ```
 
 ### Features
+
+- Type Check
+- Audio Processing
+- Blob Processing
+- Task flow control
+- Timer trick
+
 #### Type Check
+
 ```
 isString
 isNumber
@@ -46,9 +58,10 @@ isJSON
 ```
 
 ##### Examples
+
 ```js
 // Browser Environment
-import { type as typeUtils } from 'ujf';
+import { type as typeUtils } from "ujf";
 
 const isStringTest = typeUtils.isString("Yes, I'm a string.");
 console.log(isStringTest); // true
@@ -64,19 +77,23 @@ console.log(isNumberTest); // false
 ```
 
 #### Audio Processing
-- getAudioDuration(source) 
-  - source 
+
+- getAudioDuration(source)
+  - source
     - { File | Blob | Url } Browser
     - { Url | Path } Node.js
 
 ##### Examples
+
 ```js
 // Browser Environment
-import { audio as audioUtils } from 'ujf';
+import { audio as audioUtils } from "ujf";
 
-audioUtils.getAudioDuration("https://foo.bar.baz.com/996.mp3").then(duration => {
-  console.log(duration);
-});
+audioUtils
+  .getAudioDuration("https://foo.bar.baz.com/996.mp3")
+  .then(duration => {
+    console.log(duration);
+  });
 // Node.js Environment
 const { audio } = require("ujf");
 
@@ -85,19 +102,21 @@ audio.getAudioDuration("../996.mp3").then(duration => {
 });
 ```
 
-#### Blob Processing 
+#### Blob Processing
+
 - transferBlobFileToBase64(source)
   - source
     - { File | Blob } Browser
     - { ArrayBuffer } Node.js
 
 ##### Examples
+
 ```js
 // Browser Environment
-import { blob as blobUtils } from 'ujf';
+import { blob as blobUtils } from "ujf";
 
-const blobObj = new Blob(['hello world'], { type: 'text/plain' });
-blobUtils.transferBlobFileToBase64(blobObj).then((base64Str) => {
+const blobObj = new Blob(["hello world"], { type: "text/plain" });
+blobUtils.transferBlobFileToBase64(blobObj).then(base64Str => {
   console.log(base64Str);
 });
 
@@ -110,4 +129,72 @@ const source = fs.readFileSync("./meta.js");
 blob.transferBlobFileToBase64(source).then(base64 => {
   console.log(base64);
 });
+```
+
+#### Task flow control
+
+- parallelFlow(items, asyncFunc)
+  - items
+  - asyncFunc
+
+##### Examples
+
+```js
+// Node.js Environment
+const { task } = require("ujf");
+
+task.parallelFlow(["foo", "bar", "baz"], asyncFunc).then(data => {
+  console.log(data); // [ 'hi, foo', 'hi, bar', 'hi, baz' ]
+});
+
+function asyncFunc(item) {
+  return new Promise(resolve => {
+    resolve(`hi, ${item}`);
+  });
+}
+```
+
+#### Timer trick
+
+- evenlySpaced(items, space, callback)
+  - items
+  - space
+  - callback
+- intervalCondition({ watcher, condition, clearTimer, intervalTimer }, callback)
+  - watcher
+  - condition
+  - clearTimer
+  - intervalTimer
+
+##### Examples
+
+```js
+// Node.js Environment
+const { timer } = require("ujf");
+
+timer.evenlySpaced(["foo", "bar", "baz"], 1000, data => {
+  console.log(data); // "foo"  "bar" "baz"
+});
+```
+
+```js
+// Node.js Environment
+const { timer } = require("ujf");
+let foo = { initial: 1, target: 10 };
+
+setTimeout(() => {
+  foo.initial = 10;
+}, 1000);
+
+timer.intervalCondition(
+  {
+    watcher: foo,
+    condition: "watcher.initial === watcher.target",
+    clearTimer: 100,
+    intervalTimer: 1000
+  },
+  data => {
+    console.log(data); // true
+  }
+);
 ```

@@ -480,7 +480,113 @@ module.exports = {
   isJSON: isJSON // isBuffer
 
 };
-},{}],"index.js":[function(require,module,exports) {
+},{}],"task.js":[function(require,module,exports) {
+"use strict";
+
+/**
+ * 流程控制工具集
+ * 1.串行控制
+ * 2.并行控制
+ */
+
+/**
+ * 1.串行控制：一个接着一个发请求
+ * @param {*} items
+ * @param {*} asyncFunc
+ */
+function seriesFlow(items, asyncFunc) {
+  var result = [];
+  items.forEach(async function (item, i) {
+    result[i] = await asyncFunc(item);
+  });
+  return result;
+}
+/**
+ * 2.并行控制：请求一次性并行发出
+ * @param {*} items
+ * @param {*} asyncFunc
+ */
+
+
+function parallelFlow(items, asyncFunc) {
+  return new Promise(function (resolve, reject) {
+    var promises = [];
+    items.forEach(function (item, i) {
+      promises[i] = asyncFunc(item);
+    });
+    return Promise.all(promises).then(function (data) {
+      resolve(data);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
+
+module.exports = {
+  seriesFlow: seriesFlow,
+  parallelFlow: parallelFlow
+};
+},{}],"timer.js":[function(require,module,exports) {
+"use strict";
+
+var typeUtils = require("./type");
+/**
+ * setTimeout和setInterval工具集
+ * 1.循环内每项等间隔运行
+ * 2.事件轮询条件是否满足
+ */
+
+/**
+ * 1.循环内每项等间隔运行
+ * @param {*} items 被遍历项
+ * @param {*} space 间隔，单位为毫秒
+ * @param {*} callback 回调函数
+ */
+
+
+function evenlySpaced(items, space, callback) {
+  if (typeUtils.isFunction(callback)) {
+    items.forEach(function (item, i) {
+      setTimeout(function () {
+        callback(item);
+      }, i * space);
+    });
+  } else {
+    throw new Error("Invalid callback parameter");
+  }
+}
+/**
+ * 2.事件轮训条件是否满足
+ * @param {*} {watcher, condition, clearTimer, intervalTimer} 监听对象；条件；清除轮询器间隔；轮询器间隔
+ * @param {*} callback
+ */
+
+
+function intervalCondition(_ref, callback) {
+  var watcher = _ref.watcher,
+      condition = _ref.condition,
+      clearTimer = _ref.clearTimer,
+      intervalTimer = _ref.intervalTimer;
+
+  if (typeUtils.isFunction(callback)) {
+    var intervalId = setInterval(function () {
+      if (eval(condition)) {
+        setTimeout(function () {
+          clearInterval(intervalId);
+        }, clearTimer);
+        callback(true);
+      }
+    }, intervalTimer);
+  } else {
+    throw new Error("Invalid callback parameter");
+  }
+}
+
+module.exports = {
+  evenlySpaced: evenlySpaced,
+  intervalCondition: intervalCondition
+};
+},{"./type":"type.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var audio = require("./audio");
@@ -489,10 +595,16 @@ var blob = require("./blob");
 
 var type = require("./type");
 
+var task = require("./task");
+
+var timer = require("./timer");
+
 module.exports = {
   audio: audio,
   blob: blob,
-  type: type
+  type: type,
+  task: task,
+  timer: timer
 };
-},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}]},{},["index.js"], null)
+},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js","./task":"task.js","./timer":"timer.js"}]},{},["index.js"], null)
 //# sourceMappingURL=/index.js.map

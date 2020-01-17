@@ -2831,7 +2831,142 @@ module.exports = {
   isJSON: isJSON // isBuffer
 
 };
-},{}],"index.js":[function(require,module,exports) {
+},{}],"task.js":[function(require,module,exports) {
+"use strict";
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/**
+ * 流程控制工具集
+ * 1.串行控制
+ * 2.并行控制
+ */
+
+/**
+ * 1.串行控制：一个接着一个发请求
+ * @param {*} items
+ * @param {*} asyncFunc
+ */
+function seriesFlow(items, asyncFunc) {
+  var result = [];
+  items.forEach(
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(item, i) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return asyncFunc(item);
+
+            case 2:
+              result[i] = _context.sent;
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  return result;
+}
+/**
+ * 2.并行控制：请求一次性并行发出
+ * @param {*} items
+ * @param {*} asyncFunc
+ */
+
+
+function parallelFlow(items, asyncFunc) {
+  return new Promise(function (resolve, reject) {
+    var promises = [];
+    items.forEach(function (item, i) {
+      promises[i] = asyncFunc(item);
+    });
+    return Promise.all(promises).then(function (data) {
+      resolve(data);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
+
+module.exports = {
+  seriesFlow: seriesFlow,
+  parallelFlow: parallelFlow
+};
+},{}],"timer.js":[function(require,module,exports) {
+"use strict";
+
+var typeUtils = require("./type");
+/**
+ * setTimeout和setInterval工具集
+ * 1.循环内每项等间隔运行
+ * 2.事件轮询条件是否满足
+ */
+
+/**
+ * 1.循环内每项等间隔运行
+ * @param {*} items 被遍历项
+ * @param {*} space 间隔，单位为毫秒
+ * @param {*} callback 回调函数
+ */
+
+
+function evenlySpaced(items, space, callback) {
+  if (typeUtils.isFunction(callback)) {
+    items.forEach(function (item, i) {
+      setTimeout(function () {
+        callback(item);
+      }, i * space);
+    });
+  } else {
+    throw new Error("Invalid callback parameter");
+  }
+}
+/**
+ * 2.事件轮训条件是否满足
+ * @param {*} {watcher, condition, clearTimer, intervalTimer} 监听对象；条件；清除轮询器间隔；轮询器间隔
+ * @param {*} callback
+ */
+
+
+function intervalCondition(_ref, callback) {
+  var watcher = _ref.watcher,
+      condition = _ref.condition,
+      clearTimer = _ref.clearTimer,
+      intervalTimer = _ref.intervalTimer;
+
+  if (typeUtils.isFunction(callback)) {
+    var intervalId = setInterval(function () {
+      if (eval(condition)) {
+        setTimeout(function () {
+          clearInterval(intervalId);
+        }, clearTimer);
+        callback(true);
+      }
+    }, intervalTimer);
+  } else {
+    throw new Error("Invalid callback parameter");
+  }
+}
+
+module.exports = {
+  evenlySpaced: evenlySpaced,
+  intervalCondition: intervalCondition
+};
+},{"./type":"type.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var audio = require("./audio");
@@ -2840,12 +2975,18 @@ var blob = require("./blob");
 
 var type = require("./type");
 
+var task = require("./task");
+
+var timer = require("./timer");
+
 module.exports = {
   audio: audio,
   blob: blob,
-  type: type
+  type: type,
+  task: task,
+  timer: timer
 };
-},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./audio":"audio.js","./blob":"blob.js","./type":"type.js","./task":"task.js","./timer":"timer.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2873,7 +3014,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58269" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49844" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
