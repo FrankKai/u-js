@@ -1,4 +1,4 @@
-## useful-js
+## u-js
 
 Useful javascript library across Browser and Node.js.
 
