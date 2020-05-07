@@ -1,6 +1,6 @@
 {
   "name": "useful-js",
-  "version": "0.0.16",
+  "version": "0.1.0",
   "description": "Useful javascript library across Browser and Node.js.",
   "main": "dist/index.js",
   "scripts": {
