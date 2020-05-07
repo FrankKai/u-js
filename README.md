@@ -1,6 +1,6 @@
-## UJF（Useful JS Functions）
+## useful-js
 
-Fullname is Useful JS Functions，my own javascript function library across Browser and Node.js.
+Useful javascript library across Browser and Node.js.
 
 - Support for Browser and Node.js
 - Common type checks utils

@@ -1,13 +1,9 @@
 {
-  "name": "ujf",
+  "name": "useful-js",
   "version": "0.0.16",
-  "description": "Utils for frontend or nodejs developers, fullname is Useful JS Functions",
+  "description": "Useful javascript library across Browser and Node.js.",
   "main": "dist/index.js",
   "scripts": {
-    "main-compile": "babel ujf.js --presets env -o ujf.common.js",
-    "test-compile": "babel test --presets env -d test-compile",
-    "src-compile": "babel src --presets env -d ./src-compile",
-    "babel-node-compile": "babel 3.5.js --presets airbnb -o ./test/airbnb-js-style-guide/3.5.js",
     "parcel-build:node": "parcel ./src/index.js --target node --out-dir adapters/node",
     "parcel-build:browser": "parcel ./src/index.js --target browser --out-dir adapters/browser",
     "parcel-build:umd": "parcel serve ./adapters/index.js --global UJF --out-dir dist",
