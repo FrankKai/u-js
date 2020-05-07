@@ -1,5 +1,5 @@
 {
-  "name": "u-js",
+  "name": "@frankkai/u-js",
   "version": "0.1.0",
   "description": "Useful javascript library across Browser and Node.js.",
   "main": "dist/index.js",
