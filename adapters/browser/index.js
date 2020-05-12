@@ -708,7 +708,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],"../../../.config/yarn/global/node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"../../../.config/yarn/global/node_modules/buffer/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
@@ -2508,7 +2508,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../../../.config/yarn/global/node_modules/base64-js/index.js","ieee754":"../../../.config/yarn/global/node_modules/ieee754/index.js","isarray":"../../../.config/yarn/global/node_modules/isarray/index.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"blob.js":[function(require,module,exports) {
+},{"base64-js":"../../../.config/yarn/global/node_modules/base64-js/index.js","ieee754":"../../../.config/yarn/global/node_modules/ieee754/index.js","isarray":"../../../.config/yarn/global/node_modules/buffer/node_modules/isarray/index.js","buffer":"../../../.config/yarn/global/node_modules/buffer/index.js"}],"blob.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 "use strict";
 
@@ -3014,7 +3014,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49844" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58245" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

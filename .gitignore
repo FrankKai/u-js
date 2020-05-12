@@ -4,4 +4,4 @@ node_modules/
 .cache/
 /test/
 *.mp3
-/dist/
+*.map
