@@ -32,6 +32,7 @@
     "babel-preset-env": "^1.6.1"
   },
   "dependencies": {
-    "audio-loader": "^1.0.3"
+    "audio-loader": "^1.0.3",
+    "request": "2.79.0"
   }
 }

@@ -1,36 +1,33 @@
-[中文文档](./README_CN.md)
-[英文文档](./README.md)
-
 ## u-js
 
-Useful javascript library across Browser and Node.js.
+跨浏览器和 Node.js 的实用 js 库。
 
-- Support for Browser and Node.js
-- Common type checks utils
-- Common audio processing utils
-- Common blob processing utils
-- Common task flow control utils
-- Common timer trick utils
+- 支持浏览器和Node.js环境
+- 常用的类型检查工具
+- 常用的音频处理工具
+- 常用blob处理工具
+- 常会任务流控制工具
+- 常用的Timer技巧工具
 
 ### Install
 
 ```
-// if you have installed yarn
+// 如果你已经安装了yarn
 $ yarn add @frankkai/u-js
 
-// npm is also a choice
+// 同样，也可以选择npm
 $ npm install @frankkai/u-js
 ```
 
 ### Features
 
-- Type Check
-- Audio Processing
-- Blob Processing
-- Task flow control
-- Timer trick
+- 类型检查
+- 音频处理
+- blob处理
+- 任务流控制
+- Timer技巧
 
-#### Type Check
+#### 类型检查
 
 ```
 isString
@@ -79,7 +76,7 @@ const isNumberTest = type.isNumber("No, I'm a string.");
 console.log(isNumberTest); // false
 ```
 
-#### Audio Processing
+#### 音频处理
 
 - getAudioDuration(source)
   - source
@@ -94,18 +91,18 @@ import { audio as audioUtils } from "@frankkai/u-js";
 
 audioUtils
   .getAudioDuration("https://foo.bar.baz.com/996.mp3")
-  .then(duration => {
+  .then((duration) => {
     console.log(duration);
   });
 // Node.js Environment
 const { audio } = require("@frankkai/u-js");
 
-audio.getAudioDuration("../996.mp3").then(duration => {
+audio.getAudioDuration("../996.mp3").then((duration) => {
   console.log(duration);
 });
 ```
 
-#### Blob Processing
+#### blob处理
 
 - transferBlobFileToBase64(source)
   - source
@@ -119,7 +116,7 @@ audio.getAudioDuration("../996.mp3").then(duration => {
 import { blob as blobUtils } from "@frankkai/u-js";
 
 const blobObj = new Blob(["hello world"], { type: "text/plain" });
-blobUtils.transferBlobFileToBase64(blobObj).then(base64Str => {
+blobUtils.transferBlobFileToBase64(blobObj).then((base64Str) => {
   console.log(base64Str);
 });
 
@@ -129,12 +126,12 @@ const fs = require("fs");
 
 const source = fs.readFileSync("./meta.js");
 
-blob.transferBlobFileToBase64(source).then(base64 => {
+blob.transferBlobFileToBase64(source).then((base64) => {
   console.log(base64);
 });
 ```
 
-#### Task flow control
+#### 任务流控制
 
 - parallelFlow(items, asyncFunc)
   - items
@@ -146,18 +143,18 @@ blob.transferBlobFileToBase64(source).then(base64 => {
 // Node.js Environment
 const { task } = require("@frankkai/u-js");
 
-task.parallelFlow(["foo", "bar", "baz"], asyncFunc).then(data => {
+task.parallelFlow(["foo", "bar", "baz"], asyncFunc).then((data) => {
   console.log(data); // [ 'hi, foo', 'hi, bar', 'hi, baz' ]
 });
 
 function asyncFunc(item) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     resolve(`hi, ${item}`);
   });
 }
 ```
 
-#### Timer trick
+#### 常用的Timer技巧工具
 
 - evenlySpaced(items, space, callback)
   - items
@@ -175,7 +172,7 @@ function asyncFunc(item) {
 // Node.js Environment
 const { timer } = require("@frankkai/u-js");
 
-timer.evenlySpaced(["foo", "bar", "baz"], 1000, data => {
+timer.evenlySpaced(["foo", "bar", "baz"], 1000, (data) => {
   console.log(data); // "foo"  "bar" "baz"
 });
 ```
@@ -194,9 +191,9 @@ timer.intervalCondition(
     watcher: foo,
     condition: "watcher.initial === watcher.target",
     clearTimer: 100,
-    intervalTimer: 1000
+    intervalTimer: 1000,
   },
-  data => {
+  (data) => {
     console.log(data); // true
   }
 );
