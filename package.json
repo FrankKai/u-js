@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FrankKai/UJF.git"
+    "url": "git+https://github.com/FrankKai/u-js.git"
   },
   "keywords": [
     "javascript"
@@ -21,9 +21,9 @@
   "author": "FrankKai",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FrankKai/UJF/issues"
+    "url": "https://github.com/FrankKai/u-js/issues"
   },
-  "homepage": "https://github.com/FrankKai/UJF#readme",
+  "homepage": "https://github.com/FrankKai/u-js#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
